@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 if($_SERVER["REQUEST_METHOD"] === "POST"){
     $username = $_POST["username"];
     $email = $_POST["email"];     // ---> grab the submitted data
@@ -19,9 +19,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             $statement = $pdo->prepare($query);
             // executing the prepared statement and passing the received form data as values 
             $statement->execute([$username,$email,$phone,$password]);
+            // Getting the newly registered user id, to be sent to the profile page through session
+            $userId=$pdo->lastInsertId();
+            $_SESSION['userId'] = $userId;
             // Manually closing the database connection, to free up resources as early as possible (since it closes automatically anyway)
             $pdo = null;    
             $statement=null;
+            echo $userId;
             // Redirecting to profile page and terminating the script
             header("Location: ../profile.php");
             die();

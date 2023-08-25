@@ -27,5 +27,25 @@
                 max-height: 30%;
             }
         }
+        .user-info {
+            display: flex;
+            gap: 2em;
+            justify-content: space-evenly;
+            padding: 1em;
+            background: cornflowerblue;
+           div {
+            display: flex;
+            align-items: center;
+            gap: 1em;
+            svg {
+                width: 2.5em;
+                height: 2.5em;
+                fill: azure;
+            }
+            .info-paragraph {
+                color: azure;
+            }
+           }
+        }
     }
 }

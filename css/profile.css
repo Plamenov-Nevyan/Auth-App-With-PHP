@@ -28,4 +28,24 @@
 .profile-wrapper .profile-top .profile-pic img {
   max-width: 100%;
   max-height: 30%;
+}
+.profile-wrapper .profile-top .user-info {
+  display: flex;
+  gap: 2em;
+  justify-content: space-evenly;
+  padding: 1em;
+  background: cornflowerblue;
+}
+.profile-wrapper .profile-top .user-info div {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.profile-wrapper .profile-top .user-info div svg {
+  width: 2.5em;
+  height: 2.5em;
+  fill: azure;
+}
+.profile-wrapper .profile-top .user-info div .info-paragraph {
+  color: azure;
 }/*# sourceMappingURL=profile.css.map */
