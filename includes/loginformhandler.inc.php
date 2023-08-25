@@ -22,8 +22,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             $statement->execute();
             // Fetching the data of the user trying to login as associative array from the database
             $user = $statement->fetch(PDO::FETCH_ASSOC);
-            echo $user;
             if(!empty($user)){
+                if(!password_verify($password, $user["pwd"])){
+                    header("Location: ../index.php");
+                    die();
+                }
                 // setting user's id in the session so it can be used when redirected to his/her profile
                 $_SESSION['userId'] = $user["id"];
                 // Manually closing the database connection, to free up resources as early as possible (since it closes automatically anyway)

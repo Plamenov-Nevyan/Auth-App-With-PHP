@@ -1,6 +1,6 @@
 <?php 
     // start user session along with initiating it's securities
-    require_once "config.php";
+    require_once "includes/config.php";
 
     if(isset($_SESSION['userId'])) {
         require_once "includes/dbhandler.inc.php";          // if user id is in the session, create a query for fetching user data from 
