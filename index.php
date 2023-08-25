@@ -1,3 +1,9 @@
+<?php 
+ if($_GET){
+    echo $_GET['error'];
+};
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -25,7 +25,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             // Manually closing the database connection, to free up resources as early as possible (since it closes automatically anyway)
             $pdo = null;    
             $statement=null;
-            echo $userId;
             // Redirecting to profile page and terminating the script
             header("Location: ../profile.php");
             die();
