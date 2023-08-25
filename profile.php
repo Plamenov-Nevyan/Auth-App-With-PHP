@@ -1,16 +1,18 @@
 <?php 
-    session_start();
+    // start user session along with initiating it's securities
+    require_once "config.php";
+
     if(isset($_SESSION['userId'])) {
-        require_once "includes/dbhandler.inc.php";
-        $query = "SELECT * FROM users WHERE id = :userId";
+        require_once "includes/dbhandler.inc.php";          // if user id is in the session, create a query for fetching user data from 
+        $query = "SELECT * FROM users WHERE id = :userId";  // the database and prepared named statement 
         $statement = $pdo->prepare($query);
         $statement->bindParam("userId", $_SESSION['userId']);
-        $statement->execute();
-        $user = $statement->fetch(PDO::FETCH_ASSOC);
+        $statement->execute();                              // execute the statement and fetch the user data as a associative array        
+        $user = $statement->fetch(PDO::FETCH_ASSOC);        // since it's easier to work with 
     };
 
     $pdo=null;
-    $statement=null;
+    $statement=null;    // close database connection and terminate statement to free up resources
 ?>
 
 

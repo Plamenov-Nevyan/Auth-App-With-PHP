@@ -1,5 +1,7 @@
 <?php
-session_start();
+
+require_once "config.php";
+
 if($_SERVER["REQUEST_METHOD"] === "POST"){
     $username = $_POST["username"];
     $email = $_POST["email"];     // ---> grab the submitted data
@@ -15,7 +17,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             require "dbhandler.inc.php";  
             // SQL query for inserting a newly registered user in the database, values will be passed during it's execution
             $query = "INSERT INTO users (username, email, phone, pwd) VALUES (?, ?, ?, ?);";  
-            //Creating SQL prepared statement using the query for registration
+            //Creating SQL unnamed prepared statement using the query for registration
             $statement = $pdo->prepare($query);
             // executing the prepared statement and passing the received form data as values 
             $statement->execute([$username,$email,$phone,$password]);

@@ -1,9 +1,9 @@
 <?php
 
-session_start();
+require_once "config.php";
 
 if($_SERVER["REQUEST_METHOD"] === "POST"){
-    $email = $_POST["email"];     // ---> grab the submitted data and sanitize it preventing XSS attacks
+    $email = $_POST["email"];     // ---> grab the submitted data for comparing in the database
     $password = $_POST["password"];
 
     if(empty($email) || empty($password)){    // error handler, the empty function checks if extracted value is empty string
@@ -13,17 +13,18 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         try {
             // getting the PDO connection to MySQL in dbhandler.inc file
             require "dbhandler.inc.php";  
-            // SQL query for inserting a newly registered user in the database, values will be passed during it's execution
+            // SQL query for finding the user trying to login with it's email
             $query = "SELECT * FROM users WHERE email = :email";  
-            //Creating SQL prepared statement using the query for registration
+            //Creating SQL named prepared statement using the query for finding user trying to login 
             $statement = $pdo->prepare($query);
             $statement->bindParam("email", $email);
-            // executing the prepared statement and passing the received form data as values 
+            // executing the prepared statement
             $statement->execute();
-            // Getting the newly registered user id, to be sent to the profile page through session
+            // Fetching the data of the user trying to login as associative array from the database
             $user = $statement->fetch(PDO::FETCH_ASSOC);
             echo $user;
             if(!empty($user)){
+                // setting user's id in the session so it can be used when redirected to his/her profile
                 $_SESSION['userId'] = $user["id"];
                 // Manually closing the database connection, to free up resources as early as possible (since it closes automatically anyway)
                 $pdo = null;    
