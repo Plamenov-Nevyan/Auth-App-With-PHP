@@ -8,7 +8,7 @@
 </head>
 <body>
         <main>
-            <form action="includes/registerformhandler.php" method="post">
+            <form action="includes/registerformhandler.inc.php" method="post">
                 <h1>Register a new account.</h1>
                 <fieldset>
                     <label for="username">Username</label>

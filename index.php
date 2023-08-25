@@ -8,7 +8,7 @@
 </head>
 <body>
         <main>
-            <form action="includes/loginformhandler.php" method="post">
+            <form action="includes/loginformhandler.inc.php" method="post">
                 <h1>Sign in to your account.</h1>
                 <fieldset>
                     <label for="email">Email</label>
