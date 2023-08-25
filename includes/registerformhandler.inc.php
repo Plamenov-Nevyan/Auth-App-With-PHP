@@ -12,7 +12,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     ];
 
     if(empty($username) || empty($email) || empty($phone) || empty($password)){    // error handler, the empty function checks if extracted value is empty string
-        header("Location: ../index.php"); // --> redirect function
+        header("Location: ../register.php?error=Please%20fill%20all%20the@20required%20fields!"); // --> redirect function
         exit(); // terminates the current script entirely
     }else {
         try {

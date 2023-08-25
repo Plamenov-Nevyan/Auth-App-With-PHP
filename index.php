@@ -19,11 +19,11 @@
                 <h1>Sign in to your account.</h1>
                 <fieldset>
                     <label for="email">Email</label>
-                    <input type="text" name="email" id="email" />
+                    <input class="login-input" type="text" name="email" id="email" />
                 </fieldset>
                 <fieldset>
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" />
+                    <input class="login-input" type="password" name="password" id="password" />
                 </fieldset>
                 <p>Have no account yet? <a href="./register.php">Sign up here</a></p>
                 <button>Submit</button>
