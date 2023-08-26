@@ -1,7 +1,6 @@
 <?php 
     // start user session along with initiating it's securities
     require_once "includes/config.php";
-
     if(isset($_SESSION['userId'])) {
         require_once "includes/dbhandler.inc.php";          // if user id is in the session, create a query for fetching user data from 
         $query = "SELECT * FROM users WHERE id = :userId";  // the database and prepared named statement 
@@ -13,6 +12,13 @@
 
     $pdo=null;
     $statement=null;    // close database connection and terminate statement to free up resources
+
+    if($_GET){
+        echo "aaa";
+        if(isset($_GET['options-btn'])){
+            header("Location: profileOptions.php");
+        };
+    };
 ?>
 
 
@@ -23,11 +29,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/profile.css">
     <link rel="stylesheet" href="css/typography.css">
+    <script src="js/profile.js" defer></script>
     <title>Form Handling - Profile</title>
 </head>
 <body>
     <div class="profile-wrapper">
         <div class="profile-top">
+            <input type="submit" id="prof-options-btn" name="options-btn" value="Profile options" />
             <div class="cover-pic">
                 <img src="https://images.unsplash.com/photo-1624267439301-8147fff1a23d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGFuc2NhcGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" />
                 <div class="profile-pic">

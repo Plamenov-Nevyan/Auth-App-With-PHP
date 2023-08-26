@@ -6,6 +6,36 @@
     .profile-top {
         max-height: 55vh;
         position: relative;
+        #prof-options-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            margin: 0.5em 0.5em 0 0;
+            min-width: 10%;
+            padding: 0.4em 0.6em;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            background: cornsilk;
+            border-radius: 0.7em;
+            color: cornflowerblue;
+            transition: ease-in-out 200ms;
+            svg {
+                max-width: 2em;
+                max-height: 2em;
+                fill: cornflowerblue;
+            }
+        }
+        #prof-options-btn:hover{
+            background-color: cornflowerblue;
+            color: cornsilk;
+            svg {
+                fill: cornsilk;
+            }
+        }
         .cover-pic {
             width: 100%;
             height: 100%;
