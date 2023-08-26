@@ -30,13 +30,14 @@ main {
             gap: .6em;
             align-items: center;
             border: none;
+            flex-wrap: wrap;
             label {
-                flex: 1 1 10%;
+                flex: 1 1 20%;
                 font-size: 1.5rem;
                 font-weight: bold;
             }
             input {
-                flex: 0 1 90%;
+                flex: 1 1 100%;
                 font-size: 1.3rem;
                 padding: .4em 1em;
                 border: none;
@@ -50,14 +51,12 @@ main {
             input:hover {
                 background-color: rgb(226, 226, 206);
             }
-        }
-
-        fieldset:nth-child(2) {
-            input {
-                flex: 0 1 82%;
+            span.error-message{
+                flex: 1 1 100%;
+                text-align: center;
+                color: red;
             }
         }
-
         button {
             max-width: 40%;
             margin-left: auto;
