@@ -1,11 +1,14 @@
 let profOptionsBtn = document.getElementById('prof-options-btn')
 let optionBtns = document.querySelectorAll('.option-btn')
+import { onChangeSubmit } from "./validators.js"
+
 
 if(profOptionsBtn !== null){
     profOptionsBtn.addEventListener('click', () => {
         window.location.href = 'profileOptions.php'
     })
 }
+
 
 if(optionBtns !== null){
     Array.from(optionBtns).forEach(btn => {
@@ -24,8 +27,8 @@ if(optionBtns !== null){
             }
             return response.json()
         }).then((data) => {
-            console.log(data)
             document.querySelector('.forms').innerHTML = data.form
+            document.querySelector('.forms > form').addEventListener('submit', (e) => onChangeSubmit(e))
         }).catch(err => {
             console.log(err)
         })

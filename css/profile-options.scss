@@ -68,6 +68,11 @@
                 input {
                     padding: 0.4em 1em;
                 }
+                span.error-message{
+                    flex: 1 1 100%;
+                    text-align: center;
+                    color: red;
+                }
             }
             button {
                 max-width: 50%;

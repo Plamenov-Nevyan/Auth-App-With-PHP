@@ -21,14 +21,16 @@ ini_set('display_errors', 1);
             $form = '';
             if($selectedOptionMenu === 'change-username'){
                 $form = '
-                  <form>
+                  <form class="change-form" id="change-username-form">
                     <fieldset>
                         <label for="current-username">Your current username:</label>
-                        <input type="text" name="current-username" id="current-username"/>
+                        <input class="change-input" type="text" name="current-username" id="current-username"/>
+                        <span class="error-message" id="username-current-error"></span>
                     </fieldset>
                     <fieldset>
-                        <label for="username">New username:</label>
-                        <input type="text" name="username" id="username"/>
+                        <label for="new-username">New username:</label>
+                        <input class="change-input" type="text" name="new-username" id="new-username"/>
+                        <span class="error-message" id="username-new-error"></span>
                     </fieldset>
                     <button>Save Changes</button>
                   </form>
@@ -36,14 +38,16 @@ ini_set('display_errors', 1);
             }
             else if($selectedOptionMenu === 'change-email'){
                 $form =  '
-                  <form>
+                  <form class="change-form" id="change-email-form">
                     <fieldset>
                         <label for="current-email">Your current email:</label>
-                        <input type="text" name="current-email" id="current-email"/>
+                        <input class="change-input" type="text" name="current-email" id="current-email"/>
+                        <span class="error-message" id="email-current-error"></span>
                     </fieldset>
                     <fieldset>
-                        <label for="email">New email:</label>
-                        <input type="text" name="email" id="email"/>
+                        <label for="new-email">New email:</label>
+                        <input class="change-input" type="text" name="new-email" id="new-email"/>
+                        <span class="error-message" id="email-new-error"></span>
                     </fieldset>
                     <button>Save Changes</button>
                   </form>
@@ -51,28 +55,32 @@ ini_set('display_errors', 1);
             }
             else if($selectedOptionMenu === 'change-phone'){
                 $form =  '
-                  <form>
+                  <form class="change-form" id="change-phone-form">
                     <fieldset>
                         <label for="current-phone">Your current phone number:</label>
-                        <input type="number" name="current-phone" id="current-phone"/>
+                        <input class="change-input" type="number" name="current-phone" id="current-phone"/>
+                        <span class="error-message" id="phone-current-error"></span>
                     </fieldset>
                     <fieldset>
-                        <label for="phone">New phone number:</label>
-                        <input type="number" name="phone" id="phone"/>
+                        <label for="new-phone">New phone number:</label>
+                        <input class="change-input" type="number" name="new-phone" id="new-phone"/>
+                        <span class="error-message" id="phone-new-error"></span>
                     </fieldset>
                     <button>Save Changes</button>
                   </form>
                 ';
             }
             else if($selectedOptionMenu === 'change-password'){
-                $form =  '<form>
+                $form =  '<form class="change-form" id="change-password-form">
                             <fieldset>
                                 <label for="current-password">Your current password:</label>
-                                <input type="password" name="current-password" id="current-password"/>
+                                <input class="change-input" type="password" name="current-password" id="current-password"/>
+                                <span class="error-message" id="password-current-error"></span>
                             </fieldset>
                             <fieldset>
-                                <label for="password">New password:</label>
-                                <input type="password" name="password" id="password"/>
+                                <label for="new-password">New password:</label>
+                                <input class="change-input" type="password" name="new-password" id="new-password"/>
+                                <span class="error-message" id="password-new-error"></span>
                             </fieldset>
                             <button>Save Changes</button>
                          </form>';
@@ -94,7 +102,7 @@ ini_set('display_errors', 1);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/profile-options.css">
     <link rel="stylesheet" href="css/typography.css">
-    <script src="js/profile.js" defer></script>
+    <script type="module" src="js/profile.js" defer></script>
     <title>Profile Options</title>
 </head>
 <body>

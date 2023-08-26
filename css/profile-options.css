@@ -72,6 +72,11 @@
 .options-wrapper .forms form fieldset input {
   padding: 0.4em 1em;
 }
+.options-wrapper .forms form fieldset span.error-message {
+  flex: 1 1 100%;
+  text-align: center;
+  color: red;
+}
 .options-wrapper .forms form button {
   max-width: 50%;
   padding: 0.5em 1em;

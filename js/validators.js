@@ -3,14 +3,21 @@ let registerInputs = document.querySelectorAll('.register-input')
 let loginInputs = document.querySelectorAll('.login-input')
 let registerForm = document.getElementById('register-form')
 let loginForm = document.getElementById('login-form')
-let emailValRegex = /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+let changeForms = document.querySelectorAll('.change-form')
 let passwordValRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/
+
 if(registerForm !== null){
     registerForm.addEventListener('submit', (e) => validateRegisterForm(e))
 }
 if(loginForm !== null){
     loginForm.addEventListener('submit', (e) => validateLoginForm(e))
 }
+
+if(changeForms.length > 0){
+    console.log(changeForms)
+   Array.from(changeForms).forEach(form => form.addEventListener('submit', (e) => onChangeSubmit(e)))
+}
+
 
 Array.from(registerInputs).forEach(input => {
     input.addEventListener('focus', (e) => {
@@ -155,7 +162,7 @@ function sendData(userData, action){
 }
 
 function checkForEmptyInputs(inputs){
-    errors = {}
+    let errors = {}
     Array.from(inputs).forEach(input => {
         if(input.value === ''){
             errors[input.id] = input.id === 'phone' 
@@ -166,3 +173,141 @@ function checkForEmptyInputs(inputs){
     return errors
 }
 
+export const onChangeSubmit = (e) => {
+    e.preventDefault()
+    let errors = {}
+    if(e.target.id === 'change-username-form'){
+        let [currentUsernameInput, newUsernameInput] = [document.querySelector('#current-username'), document.querySelector('#new-username')]
+         errors = {...checkForEmptyInputs([currentUsernameInput, newUsernameInput])}
+        if(Object.values(errors).every(val => val === null)){
+           errors = {...inputsValidator([currentUsernameInput, newUsernameInput], errors)}
+        }
+        if(Object.values(errors).some(val => val !== null)){
+            visualizeErrors(errors, 'change')
+        }else{
+            sendChangeData('change-username', {
+                currentUsername: currentUsernameInput.value,
+                newUsernameInput: newUsernameInput.value
+            })
+        }
+    }else if(e.target.id === 'change-email-form'){
+        let [currentEmailInput, newEmailInput] = [document.querySelector('#current-email'), document.querySelector('#new-email')]
+         errors = {...checkForEmptyInputs([currentEmailInput, newEmailInput])}
+        if(Object.values(errors).every(val => val === null)){
+             errors = {...inputsValidator([currentEmailInput, newEmailInput], errors)}
+        }
+        if(Object.values(errors).some(val => val !== null)){
+            visualizeErrors(errors, 'change')
+        }else{
+            sendChangeData('change-email', {
+                currentEmail: currentEmailInput.value,
+                newEmail: newEmailInput.value
+            })
+        }
+    }else if(e.target.id === 'change-phone-form'){
+        let [currentPhoneInput, newPhoneInput] = [document.querySelector('#current-phone'), document.querySelector('#new-phone')]
+         errors = {...checkForEmptyInputs([currentPhoneInput, newPhoneInput])}
+        if(Object.values(errors).every(val => val === null)){
+             errors = {...inputsValidator([currentPhoneInput, newPhoneInput], errors)}
+        }
+        if(Object.values(errors).some(val => val !== null)){
+            visualizeErrors(errors, 'change')
+        }else{
+            sendChangeData('change-phone', {
+                currentPhone: currentPhoneInput.value,
+                newPhone: newPhoneInput.value
+            })
+        }
+    }else if(e.target.id === 'change-password-form'){
+        let [currentPasswordInput, newPasswordInput] = [document.querySelector('#current-password'), document.querySelector('#new-password')]
+         errors = {...checkForEmptyInputs([currentPasswordInput, newPasswordInput])}
+        if(Object.values(errors).every(val => val === null)){
+             errors = {...inputsValidator([currentPasswordInput, newPasswordInput], errors)}
+        }
+        if(Object.values(errors).some(val => val !== null)){
+            visualizeErrors(errors, 'change')
+        }else{
+            sendChangeData('change-password', {
+                currentPassword: currentPasswordInput.value,
+                newPassword: newPasswordInput.value
+            })
+        }
+    }
+}
+
+
+function sendChangeData(action, inputs){
+    let formData = new FormData()
+    if(action === 'change-username'){
+        formData.append('action', 'changeUsername')
+        formData.append('currentUsername', inputs.currentUsername)
+        formData.append('newUsername', inputs.newUsername)
+    }else if(action === 'change-email'){
+        formData.append('action', 'changeEmail')
+        formData.append('currentEmail', inputs.currentEmail)
+        formData.append('newEmail', inputs.newEmail)
+    }else if(action === 'change-phone'){
+        formData.append('action', 'changePhone')
+        formData.append('currentPhone', inputs.currentPhone)
+        formData.append('newPhone', inputs.newPhone)
+    }else if(action === 'change-password'){
+        formData.append('action', 'changePassword')
+        formData.append('currentPassword', inputs.currentPassword)
+        formData.append('newPassword', inputs.newPassword)
+    }
+    fetch('includes/changeinfohandler.inc.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then((resp) => {
+        resp.text()
+    })
+    .then((data) => {
+        
+    })
+    .catch(err => console.log(err))
+}
+
+function inputsValidator(inputs, errors){
+    Array.from(inputs).forEach(input => {
+        let value = input.value
+        if(input.id === 'username' || input.id === 'current-username' || input.id === 'new-username'){
+           errors[input.id] = value.length < 5 ? 'Username should be at least 5 characters long!' : null
+        }
+        if(input.id === 'email' || input.id === 'current-email' || input.id === 'new-email'){
+            errors[input.id] = value.length < 10 && !value.split('').includes('@')
+            ? 'Please enter a valid email !'
+            : null
+         }
+         if(input.id === 'phone' || input.id === 'current-phone' || input.id === 'new-phone'){
+            errors[input.id] = value.length < 5 
+            ? 'Phone number should be at least 5 characters long!' 
+            : value.split('').some(char => isNaN(char))
+                ? "Phone number shouldn\'t contain letters!"
+                : null
+         }
+         if(input.id === 'password' || input.id === 'current-password' || input.id === 'new-password'){
+            errors[input.id] = value.length < 6 
+            ? 'Password should be at least 6 characters long!' 
+            : passwordValRegex.test(value)
+                ? null
+                : 'Password should contain at least one letter and one number!'
+         }
+    })
+    console.log(errors)
+    return errors
+}
+
+function visualizeErrors(errors, action){
+    Object.entries(errors).forEach(([key, val]) => {
+        if(val !== null){
+            let errorSpan = action === 'login'
+            ? document.getElementById(`${key}-login-error`)
+            : action === 'change'
+                ? document.getElementById(`${key.split('-')[1]}-${key.split('-')[0]}-error`)
+                : document.getElementById(`${key}-error`)
+            errorSpan.style.display = 'block'
+            errorSpan.textContent = val
+        }
+    })
+}
