@@ -35,9 +35,9 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             }else {
                 throw new Exception("Your current username is incorrect!");
             };  
-          }catch(PDOException $error){
+          }catch(Exception $error){
             echo "Error: ".$error->getMessage();
-            die("Query to the database failed" . $error->getMessage());  // error handling if the query to the database fails for some reason
+            die(); 
           }
         }
     }
@@ -72,9 +72,9 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             }else {
                 throw new Exception("Your current email is incorrect!");
             };
-          }catch(PDOException $error){
+          }catch(Exception $error){
             echo "Error:".$error->getMessage();
-            die("Query to the database failed" . $error->getMessage());  // error handling if the query to the database fails for some reason
+            die();
           }
         }
     }
@@ -109,9 +109,9 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             }else {
                 throw new Exception("Your current phone number is incorrect!");
             }  
-          }catch(PDOException $error){
+          }catch(Exception $error){
             echo "Error:".$error->getMessage();
-            die("Query to the database failed" . $error->getMessage());  // error handling if the query to the database fails for some reason
+            die();
           }
         }
     }
@@ -150,14 +150,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 $pdo = null;    
                 $statement=null;
                 // Redirecting to profile page and terminating the script
-                echo"Your password was updated successfully!";
-                die();
+                die('Your password was updated successfully!');
             }else {
                 throw new Exception("Couldn't find you in the database, please try to login and try again!");
             }  
-          }catch(PDOException $error){
+          }catch(Exception $error){
             echo "Error:".$error->getMessage();
-            die("Query to the database failed" . $error->getMessage());  // error handling if the query to the database fails for some reason
+            die(); 
           }
         }
     }

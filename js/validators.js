@@ -262,12 +262,15 @@ function sendChangeData(action, inputs){
         body: formData
     })
     .then((resp) => {
-        resp.text()
+        return resp.text()
     })
     .then((data) => {
-        console.log(data)
+        if(!data.includes('Error')){
+            window.location.href = 'profile.php'
+        }
+        alert(`${data}`)
     })
-    .catch(err => console.log(err))
+    .catch(err => alert(`${err}`))
 }
 
 function inputsValidator(inputs, errors){
