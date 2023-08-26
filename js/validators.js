@@ -187,7 +187,7 @@ export const onChangeSubmit = (e) => {
         }else{
             sendChangeData('change-username', {
                 currentUsername: currentUsernameInput.value,
-                newUsernameInput: newUsernameInput.value
+                newUsername: newUsernameInput.value
             })
         }
     }else if(e.target.id === 'change-email-form'){
@@ -237,6 +237,7 @@ export const onChangeSubmit = (e) => {
 
 
 function sendChangeData(action, inputs){
+    console.log(inputs)
     let formData = new FormData()
     if(action === 'change-username'){
         formData.append('action', 'changeUsername')
@@ -255,6 +256,7 @@ function sendChangeData(action, inputs){
         formData.append('currentPassword', inputs.currentPassword)
         formData.append('newPassword', inputs.newPassword)
     }
+
     fetch('includes/changeinfohandler.inc.php', {
         method: 'POST',
         body: formData
@@ -263,7 +265,7 @@ function sendChangeData(action, inputs){
         resp.text()
     })
     .then((data) => {
-        
+        console.log(data)
     })
     .catch(err => console.log(err))
 }
@@ -294,7 +296,6 @@ function inputsValidator(inputs, errors){
                 : 'Password should contain at least one letter and one number!'
          }
     })
-    console.log(errors)
     return errors
 }
 

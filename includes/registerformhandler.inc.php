@@ -7,9 +7,9 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     $email = $_POST["email"];     // ---> grab the submitted data
     $phone = $_POST["phone"];
     $password = $_POST["password"];
-    $hash_options = [
+   $hash_options = [
         'cost' => 12
-    ];
+    ]; 
 
     if(empty($username) || empty($email) || empty($phone) || empty($password)){    // error handler, the empty function checks if extracted value is empty string
         header("Location: ../register.php?error=Please%20fill%20all%20the@20required%20fields!"); // --> redirect function

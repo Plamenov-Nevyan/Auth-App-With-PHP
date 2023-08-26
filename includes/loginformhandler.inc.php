@@ -34,8 +34,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 $statement=null;
                 // Redirecting to profile page and terminating the script
                 header("Location: ../profile.php");
+                die();
             }
-            die();
         }catch(PDOException $error){
             header("Location: ../index.php?error=".$error->getMessage());
             die("Query to the database failed" . $error->getMessage());  // error handling if the query to the database fails for some reason
