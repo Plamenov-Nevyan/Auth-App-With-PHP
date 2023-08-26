@@ -16,8 +16,8 @@ ini_set('display_errors', 1);
     $pdo=null;
     $statement=null;    // close database connection and terminate statement to free up resources
     if($_SERVER["REQUEST_METHOD"] === "POST"){
-        if(isset($_POST['option'])){
-            $selectedOptionMenu = $_POST['option'];
+        if(isset($_POST['option'])){                  // through a post request from profile.js we receive the user's chosen form to 
+            $selectedOptionMenu = $_POST['option'];   // update and send back a HTML in JSON format to be rendered through Javascript
             $form = '';
             if($selectedOptionMenu === 'change-username'){
                 $form = '

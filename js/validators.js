@@ -3,7 +3,6 @@ let registerInputs = document.querySelectorAll('.register-input')
 let loginInputs = document.querySelectorAll('.login-input')
 let registerForm = document.getElementById('register-form')
 let loginForm = document.getElementById('login-form')
-let changeForms = document.querySelectorAll('.change-form')
 let passwordValRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/
 
 if(registerForm !== null){
@@ -12,13 +11,7 @@ if(registerForm !== null){
 if(loginForm !== null){
     loginForm.addEventListener('submit', (e) => validateLoginForm(e))
 }
-
-if(changeForms.length > 0){
-    console.log(changeForms)
-   Array.from(changeForms).forEach(form => form.addEventListener('submit', (e) => onChangeSubmit(e)))
-}
-
-
+ // remove errors when inputs are on focus
 Array.from(registerInputs).forEach(input => {
     input.addEventListener('focus', (e) => {
         let errorSpan = document.getElementById(`${input.id}-error`)
@@ -37,45 +30,16 @@ Array.from(loginInputs).forEach(input => {
 
 function validateRegisterForm(e){
     e.preventDefault()
-    let errors = checkForEmptyInputs(registerInputs)
+    let errors = checkForEmptyInputs(registerInputs)  // check for empty inputs
+    // if there are no empty inputs, check their validity
     if(Object.values(errors).every(val => val === null)){
-        Array.from(registerInputs).forEach(input => {
-            let value = input.value
-            if(input.id === 'username'){
-               errors[input.id] = value.length < 5 ? 'Username should be at least 5 characters long!' : null
-            }
-            if(input.id === 'email'){
-                errors[input.id] = value.length < 10 && !value.split('').includes('@')
-                ? 'Please enter a valid email !'
-                : null
-             }
-             if(input.id === 'phone'){
-                errors[input.id] = value.length < 5 
-                ? 'Phone number should be at least 5 characters long!' 
-                : value.split('').some(char => isNaN(char))
-                    ? "Phone number shouldn\'t contain letters!"
-                    : null
-             }
-             if(input.id === 'password'){
-                errors[input.id] = value.length < 6 
-                ? 'Password should be at least 6 characters long!' 
-                : passwordValRegex.test(value)
-                    ? null
-                    : 'Password should contain at least one letter and one number!'
-             }
-        })
+       errors = {...inputsValidator(registerInputs, errors)}
     }
-
+    //visualize errors through every error span corresponding to its input sibling
     if(Object.values(errors).some(val => val !== null)){
-        Object.entries(errors).forEach(([key, val]) => {
-            if(val !== null){
-                let errorSpan = document.getElementById(`${key}-error`)
-                errorSpan.style.display = 'block'
-                errorSpan.textContent = val
-            }
-        })
-    }else{
-        sendData(
+      visualizeErrors(errors, 'register')
+    }else{ 
+        sendData(        // if everything's alright send the user data to the register handler to be processed
             {
                 username : registerInputs[0].value,
                 email: registerInputs[1].value,
@@ -89,34 +53,16 @@ function validateRegisterForm(e){
 
 function validateLoginForm(e){
     e.preventDefault()
-    let errors = checkForEmptyInputs(loginInputs)
+    let errors = checkForEmptyInputs(loginInputs) // check for empty inputs
+    // if there are no empty inputs, check their validity
     if(Object.values(errors).every(val => val === null)){
-        Array.from(loginInputs).forEach(input => {
-            let value = input.value
-            if(input.id === 'email'){
-                errors[input.id] = value.length < 10 && !value.split('').includes('@')
-                ? 'Please enter a valid email !'
-                : null
-             }
-             if(input.id === 'password'){
-                errors[input.id] = value.length < 6 
-                ? 'Password should be at least 6 characters long!' 
-                : passwordValRegex.test(value)
-                    ? null
-                    : 'Password should contain at least one letter and one number!'
-             }
-        })
+       errors = {...inputsValidator(loginInputs, errors)}
     }
+    //visualize errors through every error span corresponding to its input sibling
     if(Object.values(errors).some(val => val !== null)){
-        Object.entries(errors).forEach(([key, val]) => {
-            if(val !== null){
-                let errorSpan = document.getElementById(`${key}-login-error`)
-                errorSpan.style.display = 'block'
-                errorSpan.textContent = val
-            }
-        })
+        visualizeErrors(errors, 'login')
     }else{
-        sendData(
+        sendData(   // if everything's alright send the user data to the login handler to be processed
             {
                 email : loginInputs[0].value,
                 password: loginInputs[1].value
@@ -128,7 +74,7 @@ function validateLoginForm(e){
 }
 
 function sendData(userData, action){
-  if(action === 'register'){
+  if(action === 'register'){      // if action is register set the needed properties of the form data
     const formData = new FormData()
     formData.append("username", userData.username)
     formData.append("email", userData.email)
@@ -138,12 +84,12 @@ function sendData(userData, action){
         method: 'POST',
         body: formData
     })
-    .then(resp => resp.text())
+    .then(resp => resp.text())        // send the data for processing, empty the form and redirect to profile if response is ok
     .then(data => {
         Array.from(registerInputs).forEach(input => input.value = '')
         window.location.href = "profile.php"
     })
-    .catch(err => console.log(err))
+    .catch(err => alert(err))
   }else if(action === 'login'){
     const formData = new FormData()
     formData.append("email", userData.email)
@@ -163,7 +109,7 @@ function sendData(userData, action){
 
 function checkForEmptyInputs(inputs){
     let errors = {}
-    Array.from(inputs).forEach(input => {
+    Array.from(inputs).forEach(input => {  // llok for empty inputs and attach errors to errors object if there are any 
         if(input.value === ''){
             errors[input.id] = input.id === 'phone' 
             ? `Please fill the required field for phone number!` 

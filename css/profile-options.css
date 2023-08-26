@@ -71,6 +71,12 @@
 }
 .options-wrapper .forms form fieldset input {
   padding: 0.4em 1em;
+  border: none;
+  border-radius: 0.4em;
+  outline: none;
+}
+.options-wrapper .forms form fieldset input:hover, .options-wrapper .forms form fieldset input:focus {
+  background-color: beige;
 }
 .options-wrapper .forms form fieldset span.error-message {
   flex: 1 1 100%;

@@ -7,7 +7,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     $password = $_POST["password"];
 
     if(empty($email) || empty($password)){    // error handler, the empty function checks if extracted value is empty string
-        header("Location: ../index.php"); // --> redirect function
+        throw new Exception("Please fill all the required fields!"); // --> redirect function
         exit(); // terminates the current script entirely
     }else {
         try {
@@ -24,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             $user = $statement->fetch(PDO::FETCH_ASSOC);
             if(!empty($user)){
                 if(!password_verify($password, $user["pwd"])){
-                    header("Location: ../index.php");
+                    throw new Exception("Your password and/or email is incorrect!");
                     die();
                 }
                 // setting user's id in the session so it can be used when redirected to his/her profile
@@ -33,12 +33,12 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 $pdo = null;    
                 $statement=null;
                 // Redirecting to profile page and terminating the script
-                header("Location: ../profile.php");
+                header("Location: ../profile.php?successMsg=Welcome%20back%20".$user["username"]."!");
                 die();
             }
-        }catch(PDOException $error){
-            header("Location: ../index.php?error=".$error->getMessage());
-            die("Query to the database failed" . $error->getMessage());  // error handling if the query to the database fails for some reason
+        }catch(Exception $error){
+            echo "Error:".$error->getMessage();
+            die();
         };
     }
 }else {

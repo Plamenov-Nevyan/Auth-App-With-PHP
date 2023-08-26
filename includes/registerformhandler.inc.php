@@ -12,7 +12,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     ]; 
 
     if(empty($username) || empty($email) || empty($phone) || empty($password)){    // error handler, the empty function checks if extracted value is empty string
-        header("Location: ../register.php?error=Please%20fill%20all%20the@20required%20fields!"); // --> redirect function
+        throw new Exception("Please fill all the required fields!");
         exit(); // terminates the current script entirely
     }else {
         try {
@@ -40,10 +40,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             $statement=null;
 
             // Redirecting to profile page and terminating the script
-            header("Location: ../profile.php");
+            header("Location: ../profile.php?successMsg=Welcome%20and%20thank%20you%20for%20joining%us!");
             die();
-        }catch(PDOException $error){
-            die("Query to the database failed" . $error->getMessage());  // error handling if the query to the database fails for some reason
+        }catch(Exception $error){
+            echo 'Error' . $error->getMessage();
+            die(); 
         };
     }
 }else {

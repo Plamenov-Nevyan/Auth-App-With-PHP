@@ -13,12 +13,12 @@ if(profOptionsBtn !== null){
 if(optionBtns !== null){
     Array.from(optionBtns).forEach(btn => {
         btn.addEventListener('click', (e) => changeOptionForm(e.target.id))
-    })
+    })  
 
     function changeOptionForm(option){
         let formData = new FormData()
-        formData.append('option', option)
-        fetch('profileOptions.php', {
+        formData.append('option', option)    //send the chosen option (option button id) to profileOptions.php through post request
+        fetch('profileOptions.php', {        //  so we can get back form HTML to render
             method: 'POST',
             body: formData
         }).then((response) => {
@@ -27,10 +27,10 @@ if(optionBtns !== null){
             }
             return response.json()
         }).then((data) => {
-            document.querySelector('.forms').innerHTML = data.form
+            document.querySelector('.forms').innerHTML = data.form  // render the form and attach event for submitting it
             document.querySelector('.forms > form').addEventListener('submit', (e) => onChangeSubmit(e))
         }).catch(err => {
-            console.log(err)
+           alert(err)
         })
     }
 }
